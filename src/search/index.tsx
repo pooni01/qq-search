@@ -1,7 +1,10 @@
+import QQSearch from "./components/QQSearch/index.tsx";
+
 const Search = () => {
     return (
-      <div className="App">
-        <h1>1</h1>
+      <div>
+        <h1>QQ号查询</h1>
+        <QQSearch></QQSearch>
       </div>
     );
   }
