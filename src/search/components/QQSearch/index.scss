@@ -1,0 +1,51 @@
+.qq_search {
+    &_text {
+        margin-right: 6px;
+    }
+
+    &_input {
+        border: none;
+        border-bottom: 1px solid #000;
+        outline: medium;
+    }
+
+    .user_list {
+        width: -moz-min-content;
+        width: -webkit-min-content;
+        width: min-content;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 20px;
+        padding: 6px 10px 6px 8px;
+        background-color: rgb(243, 243, 243);
+        border: 1px solid rgb(31, 31, 31);
+        border-radius: 8px;
+        &_img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 25px;
+        }
+
+        &_right {
+            display: flex;
+            flex-direction: column;
+            p {
+                margin: 0;
+                line-height: 24px;
+                white-space: nowrap;
+            }
+
+            &_number {
+                color: #888
+            }
+        }
+    }
+
+
+    .loading {
+        top: 50px;
+        left: 90px;
+    }
+}
