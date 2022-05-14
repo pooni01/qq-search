@@ -1,4 +1,4 @@
-import { ILoadingProps } from './types.ts';
+import { ILoadingProps } from './types';
 import './index.scss'
 
 const Loading: React.FC<ILoadingProps> = (props) => {

@@ -1,10 +1,10 @@
 import './App.css';
-import Search from './search/index.tsx'
+import Search from './search/index'
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
-      <Search></Search>
+      <Search />
     </div>
   );
 }

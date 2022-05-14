@@ -1,15 +1,17 @@
 
-import { useMemo } from 'react';
+import { ChangeEvent, useMemo, useCallback } from 'react';
 import axios from 'axios';
-import Loading from '../Loading/index.tsx';
-import { useRequest, RequestStatus} from '../../../util/useRequest.tsx';
+import Loading from '../Loading/index';
+import { useRequest } from '../../../util/useRequest';
+import { RequestStatus } from '../../../util/types'
+import { IData } from './types'
 
 import './index.scss';
 
-const QQSearch = () => {
-    const { status, data, run } = useRequest({
-        defaultData:{},
-        defaultStatus: RequestStatus.SUCCESS, manual: 1, getData: (qq) => {
+const QQSearch: React.FC = () => {
+    const { status, data, run } = useRequest<IData>({
+        rule: /^[0-9]*$/,
+        defaultStatus: RequestStatus.SUCCESS, manual: true, getData: (qq) => {
             return axios.get('/api/qq.info', {
                 params: {
                     qq,
@@ -31,23 +33,25 @@ const QQSearch = () => {
                 </div>
             </div>)
         }
+
+        return (<p>暂无数据</p>)
     }, [status])
- 
+
     // 防抖
-    const debounce = (fn, time = 500) => {
-        let timer = null;
-        return (e) => {
+    const debounce = useCallback((fn: Function, time: number = 600) => {
+        let timer: NodeJS.Timeout;
+        return (e?: ChangeEvent<HTMLInputElement>) => {
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
-                fn(e.target.value)
+                fn(e?.target?.value)
             }, time)
         }
-    }
+    }, [])
 
     return (
         <div className='qq_search'>
             <span className='qq_search_text'>QQ</span>
-            <input className='qq_search_input' type="number" onChange={debounce(run, 500)} />
+            <input id="search" placeholder='请输入QQ号' className='qq_search_input' type="number" onChange={debounce(run, 500)} />
             {content}
         </div>
     );

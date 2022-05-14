@@ -1,26 +1,15 @@
 import { useEffect, useState } from 'react';
 import { unstable_batchedUpdates } from 'react-dom';
-import { IRequestParams, IRequestStatus} from './types.ts';
+import { IRequestParams, RequestStatus, IRequest } from './types';
 
-export enum RequestStatus{
-    PENDING = 'pending',
-    SUCCESS = 'success',
-    FAILED = 'failed'
-}
 
 // 接口状态枚举
 enum Status {
     success = 1
 }
 
-interface IRequest{
-    status: IRequestStatus;
-    data: any;
-    run: any;
-}
-
-export const useRequest:IRequestParams = (props):IRequest => {
-    const { defaultData, defaultStatus = RequestStatus.PENDING, getData, manual } = props;
+export const useRequest = function <T>(props: IRequestParams<T>): IRequest<T> {
+    const { rule, defaultData, defaultStatus = RequestStatus.PENDING, getData, manual } = props;
     const [data, setData] = useState(defaultData);
     const [status, setStatus] = useState(defaultStatus)
 
@@ -29,7 +18,9 @@ export const useRequest:IRequestParams = (props):IRequest => {
         run()
     }, [manual])
 
-    const run = (value='') => {
+    const run = (value = '') => {
+        if(rule && !value.match(rule)) return;
+
         setStatus(RequestStatus.PENDING)
         getData(value).then((res) => {
             const { data } = res
@@ -42,7 +33,7 @@ export const useRequest:IRequestParams = (props):IRequest => {
                 return;
             }
             setStatus(RequestStatus.FAILED)
-        }).catch((error) => {
+        }).catch((error: any) => {
             setStatus(RequestStatus.FAILED)
             console.log(error);
         })

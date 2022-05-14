@@ -1,13 +1,13 @@
-import QQSearch from "./components/QQSearch/index.tsx";
+import QQSearch from "./components/QQSearch/index";
 import './index.scss';
 
-const Search = () => {
+const Search: React.FC = () => {
   return (
     <div className="page-search">
       <h1>QQ号查询</h1>
-      <QQSearch></QQSearch>
+      <QQSearch />
     </div>
   );
 }
-  
+
 export default Search;
